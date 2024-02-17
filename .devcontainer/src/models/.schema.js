@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import mogoose from "mongoose";
+import mogoose from "mongoose";//mangoose helps to create schemas...
 //object in method
 const collectionSchema=new mangoose.Schema(
     {
@@ -10,8 +10,8 @@ const collectionSchema=new mangoose.Schema(
           
         name:{
             type:String,
-            required:["true","Please Provide collection name"],
-            trim:true,//if there is any space in name
+            required:["true","Please Provide collection name"], //this is syntax...
+            trim:true,//if there is any space in name "   parvej"
             maxLength:[
                 120,
                 "collection length should not be more than 120 chars"
@@ -19,8 +19,8 @@ const collectionSchema=new mangoose.Schema(
         }
         
     },
-    {timestamps:true}
+    {timestamps:true} //this is second object.....
  )   ; 
 
  export default mongoose.model("Collection",collectionSchema)
- //how it converted to database=>>..collections
+ //how it converted to database=>>..collections [lowercase and plural] Collection=>>collections
