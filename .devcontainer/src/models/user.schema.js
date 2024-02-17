@@ -1,4 +1,7 @@
  import mangoose from "mongoose";
+ import crypto from "crypto"
+ import config from "../config/index.js";
+ import Jsntoken, { JsonWebTokenError } from "jsonwebtoken"
  import AuthRoles from "../utils/authRoles.js";
  import bcrypt from "bcrypt.js";// user hai to encryption to lagega hi...
 // client side validation is bad=>inviting bugs and security issues in our database...
@@ -54,8 +57,44 @@
 
 comparePassword:async function(enteredPassword){ //we need to pass entered password here...
    return await bcrypt.compare(enteredPassword,this.password)
+},
+//generating tockens...vimp****
+
+ getJWTtoken:function(){ //() inside bracket we can provide    " "/{ }/name as payload
+
+  JWT.sigh({_id:this._id , role:this.role}, config.JWT_SECRET,{ //this jwt sign creates long string hides information passed on payload=>whoever knows jwt secrete can decrept that info
+    expiresIn:config.JWT_EXPIRY   //as we havent created _id but in =>> mongoDB creates document _id for it similarly we can also store roles in it as well
+  })
+  //whoever has this token first see whether user is loged in then he will have a token =>based on token i will make query to database =>dataBase will give me this info i will pass this info on frontend...
+
+},
+
+//generate forgot password token......
+generateForgotPasswordToken:funtion (){
+  const forgotToken=crypto.randomBytes(20).tiString("hex")  //generating, storing, returning it back
+  // encrypting..
+  this.forgotPasswordToken = crypto
+  .createHash("sha256")
+  .update(forgotToken)
+  .digest("hex")
+  // time for token to expire
+  this.forgotPasswordExpiry = Date.now()+20*60*1000
+  return forgotToken
+
 }
+
+
+
+
+
+
+
 }
+
+//if user entered email and password and we want to find and grab information then WE HAVE TO GIVE HIM a token bcz he is now authorized user
+//Let learn to create tokens ny using NPN :) 
+
+
 
 
 
