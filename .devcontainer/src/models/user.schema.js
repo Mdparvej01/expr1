@@ -94,9 +94,5 @@ generateForgotPasswordToken:funtion (){
 //if user entered email and password and we want to find and grab information then WE HAVE TO GIVE HIM a token bcz he is now authorized user
 //Let learn to create tokens ny using NPN :) 
 
-
-
-
-
  export default mangoose.model("User",userSchema) //it will give users
  //mongoose provide hooks=>e.g. just before deleting something we want something should happen(activity)
