@@ -70,3 +70,47 @@ export const signUp=asyncHandler(async(req,res) => {
 
 
 })
+
+export const login= asyncHandler(async(req,res) => {
+    const {email,password} = req.body
+    //validation
+    if(!email || !password){
+        throw new CustomError("Please fill all details",400)
+    }
+
+// while selecting select passwprd=false is there=>we need to handle this=>i have tomatch the password
+//.select("+ALL the feilds  which are select as false")
+   const user=  User.findOne({email}).select("+password")
+   if(!user){
+    throw new CustomError("Invalid",400)
+     }
+     const isPasswordMatched = await user.comparePassword(password)
+     if(isPasswordMatched){     //if matched i will give him a token 
+        const token=user.getJWTtoken()
+        //now user holding the password lets do the safety
+        user.password=undefined //password flushed out...
+        res.cookie("token",token,cookieOptions) //now user has this cookie
+        return res.status(200).json({
+            success:true,
+            token,
+            user
+        })
+     }
+
+      //if not matched
+      throw new CustomError("Password is incoorect",400)
+  //BAKEND job is take response and send response
+})
+
+export const logout =asyncHandler(async(req,res) => {
+    //just delete the cookie
+    res.cookie("token", null,{
+        expires:new Date(Date.now()),
+        httpOnly:true
+    })
+    
+    res.status(200).json({
+        success:true,
+        message:'Logged Out'
+    })
+})
