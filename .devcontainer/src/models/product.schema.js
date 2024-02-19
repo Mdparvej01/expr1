@@ -32,6 +32,7 @@ const productSchema = new mongoose.Schema({
         default:0
     },
     collectionId:{ //vvimp..........connecting one model to other model => two things are imp=>1)referance and 2)
+        type:mongoose.Schema.Types.ObjectId,//im referencing to another model here  and obj id make sure ref is mentioned...
          ref:"Collection" //this is exaclty the name as in collection Schema.js file ;) imp********
     }
 

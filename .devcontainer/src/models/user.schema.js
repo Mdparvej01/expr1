@@ -89,7 +89,7 @@ generateForgotPasswordToken:funtion (){
 
 
 
-}
+} 
 
 //if user entered email and password and we want to find and grab information then WE HAVE TO GIVE HIM a token bcz he is now authorized user
 //Let learn to create tokens ny using NPN :) 
