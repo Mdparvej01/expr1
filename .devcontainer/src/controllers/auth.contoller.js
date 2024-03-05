@@ -114,3 +114,10 @@ export const logout =asyncHandler(async(req,res) => {
         message:'Logged Out'
     })
 })
+
+//now lets talk abt middleware->some case where user is already logged in=>
+//2ways=>
+//1st >acees user cookie every time->allow the access to resourse
+//2nd way->user hits route -> we want to go ahead and check user auth ->then allow the user to aceess->advntage->
+
+

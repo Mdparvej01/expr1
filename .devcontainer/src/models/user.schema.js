@@ -71,7 +71,7 @@ comparePassword:async function(enteredPassword){ //we need to pass entered passw
 
 //generate forgot password token......
 generateForgotPasswordToken:funtion (){
-  const forgotToken=crypto.randomBytes(20).tiString("hex")  //generating, storing, returning it back
+  const forgotToken=crypto.randomBytes(20).toString("hex")  //generating, storing, returning it back
   // encrypting..
   this.forgotPasswordToken = crypto
   .createHash("sha256")
