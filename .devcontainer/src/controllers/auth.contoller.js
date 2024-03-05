@@ -120,4 +120,18 @@ export const logout =asyncHandler(async(req,res) => {
 //1st >acees user cookie every time->allow the access to resourse
 //2nd way->user hits route -> we want to go ahead and check user auth ->then allow the user to aceess->advntage->
 
+// controller for giving user a profile..
+export const getProfile = asyncHandler(async (req,res)=>{
+    //we dont want to provide this profile to every single user->and to only loggedIn users
+    //const user =req.user => chalta
+    const {user} = req   //destructuring of object
 
+    if(!user){
+        throw new CustomError("user not found",401)
+    }
+
+    res.status(200).json({
+        success:true,
+        user
+    })
+})
