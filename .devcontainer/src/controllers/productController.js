@@ -6,6 +6,8 @@ import asyncHandler from "../service/asynchHandler.js"
 import CustomError from "../utils/CustomError.js"
 import config from "../config/index.js"
 import { Mongoose } from "mongoose"
+import fs from "fs"
+
 
  
 
@@ -25,6 +27,33 @@ export const addProduct = asyncHandler(async(req,res)=>{
         // `products/${productId}/photo_3.` alternative for upr vala
 
         console.log(fields,files);
+
+        if (
+            !fields.name ||
+            !fields.price ||
+            !fields.description || 
+            !fields.collectionId
+        ) {
+            throw new CustomError("fill allfields " , 500)
+
+        }
+
+        let imgArrayResp = Promise.all (
+            Objects.keys(files).map( async(file , index) => {
+                const element = file[fileKey]
+                console.log(element);
+                fs.readFileSync(element.filepath)
+
+                //uploading
+
+                s3FileUpload({
+                    bucketName:config.S3_BUCKET_NAME,
+                    key:`product/${productId}/photo_${index + 1}.png`,
+                    body:DataTransfer,
+                    contentType:element.mimetype 
+                })
+            })
+        )
 
         
     })
